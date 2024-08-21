@@ -1,0 +1,104 @@
+/dts-v1/;
+
+/ {
+
+	fragment@0 {
+		target-path = "/";
+
+		__overlay__ {
+
+			chosen {
+
+				overlays {
+					BB-SPIDEV0-00A0 = "Sat Aug 21 14:57:17 2021";
+				};
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+
+			P9_17_pinmux {
+				status = "okay";
+			};
+
+			P9_18_pinmux {
+				status = "okay";
+			};
+
+			P9_21_pinmux {
+				status = "okay";
+			};
+
+			P9_22_pinmux {
+				status = "okay";
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+
+			pinmux_bb_spi0_pins {
+				pinctrl-single,pins = <0x150 0x28 0x154 0x28 0x158 0x28 0x15c 0x28>;
+				phandle = <0x01>;
+			};
+		};
+	};
+
+	fragment@3 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			#address-cells = <0x01>;
+			#size-cells = <0x00>;
+			status = "okay";
+			pinctrl-names = "default";
+			pinctrl-0 = <0x01>;
+
+			channel@0 {
+				#address-cells = <0x01>;
+				#size-cells = <0x00>;
+				compatible = "rohm,dh2228fv";
+				symlink = "spi/0.0";
+				reg = <0x00>;
+				spi-max-frequency = <0xf42400>;
+				spi-cpha;
+			};
+
+			channel@1 {
+				#address-cells = <0x01>;
+				#size-cells = <0x00>;
+				compatible = "rohm,dh2228fv";
+				symlink = "spi/0.1";
+				reg = <0x01>;
+				spi-max-frequency = <0xf42400>;
+			};
+		};
+	};
+
+	__symbols__ {
+		bb_spi0_pins = "/fragment@2/__overlay__/pinmux_bb_spi0_pins";
+	};
+
+	__fixups__ {
+		ocp = "/fragment@1:target:0";
+		am33xx_pinmux = "/fragment@2:target:0";
+		spi0 = "/fragment@3:target:0";
+	};
+
+	__local_fixups__ {
+
+		fragment@3 {
+
+			__overlay__ {
+				pinctrl-0 = <0x00>;
+			};
+		};
+	};
+};

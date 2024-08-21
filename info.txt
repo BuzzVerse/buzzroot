@@ -1,0 +1,9 @@
+buildroot doesn't build on this version because of changed behavior of dts
+builds on 2022.11
+am335x-boneblack-buzz.dts halts at boot (more in board/buzzverse/dts/info.txt)
+am335x-boneblack.dts boots, spidev is visible in /dev but doesn't work
+
+defconfig = configs/buzzverse_defconfig
+dts = board/buzzverse/dts
+
+you need to enable <*> (not as a module <m>) spi user space driver in linux-menuconfig -> Device Drivers -> SPI Support -> User mode SPI device driver support
